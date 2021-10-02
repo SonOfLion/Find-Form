@@ -1,21 +1,18 @@
 import { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
-// import { baceUrl } from '../../api/baceUrl';
-// import ListOfDecode from '../list-of-decode/ListOfDecode';
+import { baceUrl } from '../api/Api';
 
 import './FormFind.scss';
 
 const FormFind = () => {
-  const [input, setInput] = useState('1FTFW1CT5DFC10312');
+  const [input, setInput] = useState('');
   const [cars, setCars] = useState([]);
 
   const handleRequest = async () => {
-    const getCars =  `https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/${ input }?format=json`;
+    const getCars = `${baceUrl}/vehicles/decodevin/${input}?format=json`;
 
-    await fetch(getCars)
-      .then(res => res.json())
-      .then(data => console.log(data))
+    await axios(getCars)
       .then(data => setCars(data))
       .catch(error => alert(error))
   };
@@ -27,6 +24,7 @@ const FormFind = () => {
       setInput(e.target.value);
     }
   };
+
 
   console.log(cars)
 
@@ -41,7 +39,7 @@ const FormFind = () => {
       <div className="wrapper-find">
         <form
           className="form-find"
-          onClick={ () => handleSubmit }
+          onSubmit={ handleSubmit }
         >
           <input
             value={ input }
@@ -58,9 +56,9 @@ const FormFind = () => {
             decode
           </button>
         </form>
-
+        { cars && cars.map((el) => { return (<div>{ el.data }</div>)} )}
       </div>
-      { cars.elements && cars.elements.map((el) => { return (<div>{ el.data }</div>)} )}
+
     </>
   );
 };
