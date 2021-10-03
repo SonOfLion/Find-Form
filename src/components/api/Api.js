@@ -1,1 +1,1 @@
-export const baceUrl = "https://vpic.nhtsa.dot.gov/api/";
+export const baseUrl = "https://vpic.nhtsa.dot.gov/api/";
