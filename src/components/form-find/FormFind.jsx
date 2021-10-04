@@ -7,7 +7,7 @@ import TrackInputVIN from '../track-input/TrackInputVIN';
 
 import './FormFind.scss';
 
-const FormFind = () => {
+const FormFind = ({ save }) => {
   const [inputVIN,setInputVIN] = useState('');
   const [infoCar,setInfoCars] = useState([]);
 
@@ -22,7 +22,7 @@ const FormFind = () => {
   const handleChange = (e) => {
     const reg = /^[a-zA-Z0-9]+$/;
 
-    sessionStorage.setItem('inputVIN', e.target.value);
+    sessionStorage.setItem('track', e.target.value);
 
     if (e.target.value === '' || reg.test(e.target.value)) {
       setInputVIN(e.target.value);
@@ -58,7 +58,7 @@ const FormFind = () => {
         infoCar.length > 0 && infoCar.map(({ Value,ValueId,Variable,VariableId }) =>
         <ListOfDecode key={ VariableId } value={ Value } variable={ Variable } valueId={ ValueId } />)
       }
-      <TrackInputVIN />
+      <TrackInputVIN inputVIN={ inputVIN }/>
     </div>
   );
 };
