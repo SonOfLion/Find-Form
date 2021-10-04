@@ -1,6 +1,9 @@
 .track-input {
   width: 100%;
+  max-width: 400px;
+  min-width: 200px;
   border-radius: 20px;
+  word-wrap: break-word;
   margin: 10px 0 0 0;
   padding: 4px;
   border: 2px solid #0e64ed;
@@ -9,5 +12,10 @@
     text-align: center;
     width: 100%;
     border-bottom: 1px solid #0e64ed;
+  }
+
+  &____element {
+    width: 100%;
+    display: block;
   }
 }

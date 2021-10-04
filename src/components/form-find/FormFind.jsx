@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
 import { baseUrl } from '../api/Api';
 import ListOfDecode from '../list-of-decode/ListOfDecode';
 import TrackInputVIN from '../track-input/TrackInputVIN';
+import { TrackInput } from "../../context";
 
 import './FormFind.scss';
 
 const FormFind = () => {
   const [inputVIN,setInputVIN] = useState('');
   const [infoCar,setInfoCars] = useState([]);
+  const [state, dispatch] = useContext(TrackInput);
 
   const handleRequest = async () => {
     const getCars = `${ baseUrl }/vehicles/decodevin/${ inputVIN }?format=json`;
@@ -22,17 +24,19 @@ const FormFind = () => {
   const handleChange = (e) => {
     const reg = /^[a-zA-Z0-9]+$/;
 
-    sessionStorage.setItem('inputVIN', e.target.value);
-
+    // sessionStorage.setItem('track', e.target.value);
+    dispatch({ type: "trackInput", payload: inputVIN });
     if (e.target.value === '' || reg.test(e.target.value)) {
       setInputVIN(e.target.value);
     }
+    dispatch({ type: "track" })
   };
 
   const handleSubmit = (e) => {
     handleRequest();
     setInputVIN('');
     e.preventDefault();
+    dispatch({ type: "trackInput", payload: inputVIN });
   };
 
   return (

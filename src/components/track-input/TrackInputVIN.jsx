@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React,{ useContext } from 'react';
+import { TrackInput } from "../../context";
 
 import './TrackInputVIN.scss';
 
 const TrackInputVIN = () => {
-  const [renderSessionStorage, setRenderSessionStorage] = useState([]);
+  const [trackState, dispatch] = useContext(TrackInput);
+  console.log(trackState)
 
-  useEffect(() => {
-    setRenderSessionStorage([sessionStorage.getItem('inputVIN')]);
-  },[]);
-
-  console.log(renderSessionStorage)
   return (
-    <div className="track-input">
+    <section className="track-input">
       <p className="track-input__title">History of VIN-code</p>
      {
-       renderSessionStorage && renderSessionStorage.map((el, index) =>
-         <span key={index}>{ el }</span>)
+       trackState.track && trackState.track.slice(1, 9).map((el, index) =>
+         <span className="track-input__element" key={ index }>{ el.text }&nbsp;</span>)
      }
-    </div>
+    </section>
   );
 };
 
 export default TrackInputVIN;
+
+// useEffect(() => {
+//   setTrackInput([sessionStorage.getItem('track')])
+// },[])
